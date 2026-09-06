@@ -1,148 +1,328 @@
 <!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<html lang="cs"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>Pozdrav</title>
+    <title>Pozdrav</title>
 
-<style>
-    body {
-        font-family: Arial, sans-serif;
-        max-width: 600px;
-        margin: 60px auto;
-        padding: 20px;
-        text-align: center;
-    }
+    <style>
+        * {
+            box-sizing: border-box;
+        }
 
-    h1 {
-        margin-bottom: 40px;
-    }
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
 
-    input {
-        font-size: 18px;
-        padding: 10px;
-        margin: 10px;
-    }
+            font-family: Arial, sans-serif;
 
-    button {
-        font-size: 18px;
-        padding: 12px 25px;
-        margin: 8px;
-        cursor: pointer;
-    }
+            background: linear-gradient(135deg, #74ebd5, #9face6);
+        }
 
-    #odpoved {
-        margin-top: 30px;
-        font-size: 20px;
-        min-height: 30px;
-    }
-</style>
+        .card {
+            width: 90%;
+            max-width: 500px;
 
+            background: white;
+
+            padding: 40px 25px;
+
+            border-radius: 25px;
+
+            text-align: center;
+
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            font-size: 42px;
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 21px;
+            line-height: 1.5;
+        }
+
+        input {
+            width: 90%;
+
+            padding: 15px;
+
+            font-size: 18px;
+
+            border: 2px solid #ddd;
+            border-radius: 12px;
+
+            margin: 15px 0;
+        }
+
+        button {
+            border: none;
+
+            padding: 15px 25px;
+
+            margin: 8px;
+
+            font-size: 18px;
+
+            border-radius: 12px;
+
+            cursor: pointer;
+
+            transition: transform 0.15s;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+        }
+
+        .primary {
+            background: #4f6df5;
+            color: white;
+        }
+
+        .good {
+            background: #4caf50;
+            color: white;
+        }
+
+        .bad {
+            background: #f44336;
+            color: white;
+        }
+
+        .yes {
+            background: #2196f3;
+            color: white;
+        }
+
+        .no {
+            background: #777;
+            color: white;
+        }
+
+        .restart {
+            background: #333;
+            color: white;
+        }
+
+        .emoji {
+            font-size: 60px;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
 </head>
 
 <body>
 
-<h1>Ahoj!</h1>
+<div class="card">
 
-<div id="jmenoBox">
-    <p>Jak se jmenuješ?</p>
+    <!-- JMÉNO -->
+    <div id="jmenoBox">
 
-    <input type="text" id="jmeno" placeholder="Tvoje jméno">
+        <div class="emoji">👋</div>
 
-    <br>
+        <h1>Ahoj!</h1>
 
-    <button onclick="ulozJmeno()">Pokračovat</button>
+        <p>Jak se jmenuješ?</p>
+
+        <input
+            type="text"
+            id="jmeno"
+            placeholder="Napiš své jméno"
+        >
+
+        <br>
+
+        <button class="primary" onclick="ulozJmeno()">
+            Pokračovat
+        </button>
+
+    </div>
+
+
+    <!-- STAV -->
+    <div id="stavBox" class="hidden">
+
+        <div class="emoji">😊</div>
+
+        <h1 id="pozdrav"></h1>
+
+        <p>Jak se dnes máš?</p>
+
+        <button class="good" onclick="stav('dobře')">
+            😊 Dobře
+        </button>
+
+        <button class="bad" onclick="stav('špatně')">
+            😕 Špatně
+        </button>
+
+    </div>
+
+
+    <!-- TELEFON -->
+    <div id="dotazBox" class="hidden">
+
+        <div class="emoji">📞</div>
+
+        <p id="stavOdpoved"></p>
+
+        <p>Nechceš mi zavolat?</p>
+
+        <button class="yes" onclick="telefon('ano')">
+            👍 Ano
+        </button>
+
+        <button class="no" onclick="telefon('ne')">
+            👎 Ne
+        </button>
+
+    </div>
+
+
+    <!-- KONEC -->
+    <div id="konecBox" class="hidden">
+
+        <div class="emoji">🎉</div>
+
+        <h1 id="konec"></h1>
+
+        <p id="rozlouceni"></p>
+
+        <button class="restart" onclick="restart()">
+            🔄 Začít znovu
+        </button>
+
+    </div>
+
 </div>
-
-
-<div id="stavBox" style="display:none;">
-    <p id="pozdrav"></p>
-
-    <p>Jak se ti vede?</p>
-
-    <button onclick="stav('dobře')">Dobře</button>
-    <button onclick="stav('špatně')">Špatně</button>
-</div>
-
-
-<div id="dotazBox" style="display:none;">
-    <p id="stavOdpoved"></p>
-
-    <p>Nechceš mi zavolat?</p>
-
-    <button onclick="telefon('ano')">Ano</button>
-    <button onclick="telefon('ne')">Ne</button>
-</div>
-
-
-<div id="konecBox" style="display:none;">
-    <p id="konec"></p>
-</div>
-
-
-<div id="odpoved"></div>
 
 
 <script>
 
-    let jmeno = "";
+let jmeno = "";
 
 
-    function ulozJmeno() {
+function ulozJmeno() {
 
-        jmeno = document.getElementById("jmeno").value.trim();
+    jmeno = document
+        .getElementById("jmeno")
+        .value
+        .trim();
 
-        if (jmeno === "") {
-            document.getElementById("odpoved").textContent =
-                "Nejdřív mi prosím řekni své jméno.";
-            return;
-        }
+    if (jmeno === "") {
 
-        document.getElementById("jmenoBox").style.display = "none";
-        document.getElementById("stavBox").style.display = "block";
+        alert("Nejdřív mi prosím řekni své jméno.");
 
-        document.getElementById("pozdrav").textContent =
-            "Těší mě, " + jmeno + "!";
+        return;
     }
 
+    document
+        .getElementById("jmenoBox")
+        .classList.add("hidden");
 
-    function stav(odpoved) {
+    document
+        .getElementById("stavBox")
+        .classList.remove("hidden");
 
-        document.getElementById("stavBox").style.display = "none";
-        document.getElementById("dotazBox").style.display = "block";
+    document
+        .getElementById("pozdrav")
+        .textContent = "Ahoj, " + jmeno + "!";
+}
 
-        if (odpoved === "dobře") {
 
-            document.getElementById("stavOdpoved").textContent =
-                "To jsem rád, " + jmeno + ".";
+function stav(odpoved) {
 
-        } else {
+    document
+        .getElementById("stavBox")
+        .classList.add("hidden");
 
-            document.getElementById("stavOdpoved").textContent =
-                "To mě mrzí, " + jmeno + ".";
+    document
+        .getElementById("dotazBox")
+        .classList.remove("hidden");
 
-        }
+
+    if (odpoved === "dobře") {
+
+        document
+            .getElementById("stavOdpoved")
+            .textContent =
+            "To mě moc těší, " + jmeno + "! 😊";
+
+    } else {
+
+        document
+            .getElementById("stavOdpoved")
+            .textContent =
+            "To mě mrzí, " + jmeno + ". Snad bude brzy lépe. ❤️";
     }
+}
 
 
-    function telefon(odpoved) {
+function telefon(odpoved) {
 
-        document.getElementById("dotazBox").style.display = "none";
-        document.getElementById("konecBox").style.display = "block";
+    document
+        .getElementById("dotazBox")
+        .classList.add("hidden");
 
-        if (odpoved === "ano") {
+    document
+        .getElementById("konecBox")
+        .classList.remove("hidden");
 
-            document.getElementById("konec").textContent =
-                "Super, budu se těšit!";
 
-        } else {
+    if (odpoved === "ano") {
 
-            document.getElementById("konec").textContent =
-                "To je škoda.";
+        document
+            .getElementById("konec")
+            .textContent =
+            "Super! 😃";
 
-        }
+        document
+            .getElementById("rozlouceni")
+            .textContent =
+            "Budu se těšit na telefonát, " + jmeno + "! 📞";
 
-        document.getElementById("odpoved").textContent =
-            "Hezký den, " + jmeno + "!";
+    } else {
+
+        document
+            .getElementById("konec")
+            .textContent =
+            "Škoda! 😉";
+
+        document
+            .getElementById("rozlouceni")
+            .textContent =
+            "Tak třeba příště, " + jmeno + ".";
     }
+}
+
+
+function restart() {
+
+    document
+        .getElementById("konecBox")
+        .classList.add("hidden");
+
+    document
+        .getElementById("jmenoBox")
+        .classList.remove("hidden");
+
+    document
+        .getElementById("jmeno")
+        .value = "";
+
+}
 
 </script>
 
-</body> </html>
+</body>
+</html>
