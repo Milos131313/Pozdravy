@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<title>Kalkulačka</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: #f2f2f2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+  }
+  .box {
+    background: white;
+    padding: 30px 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    width: 320px;
+  }
+  h1 {
+    text-align: center;
+    font-size: 22px;
+    margin-bottom: 5px;
+  }
+  hr {
+    border: none;
+    border-top: 2px solid #333;
+    margin-bottom: 20px;
+  }
+  label {
+    display: block;
+    margin-top: 10px;
+    font-size: 14px;
+  }
+  input[type="number"] {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    margin-top: 4px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 20px;
+    background: #333;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 15px;
+    cursor: pointer;
+  }
+  button:hover {
+    background: #555;
+  }
+  #vysledky {
+    margin-top: 20px;
+    font-size: 15px;
+    line-height: 1.6;
+  }
+  .chyba {
+    color: #b00020;
+    font-weight: bold;
+  }
+</style>
+</head>
+<body>
+
+<div class="box">
+  <h1>KALKULAČKA</h1>
+  <hr>
+
+  <label for="cislo1">Zadej první číslo:</label>
+  <input type="number" id="cislo1" step="any">
+
+  <label for="cislo2">Zadej druhé číslo:</label>
+  <input type="number" id="cislo2" step="any">
+
+  <button onclick="vypocitej()">Vypočítat</button>
+
+  <div id="vysledky"></div>
+</div>
+
+<script>
+function vypocitej() {
+  const aStr = document.getElementById("cislo1").value;
+  const bStr = document.getElementById("cislo2").value;
+  const vysledky = document.getElementById("vysledky");
+
+  if (aStr === "" || bStr === "") {
+    vysledky.innerHTML = '<span class="chyba">Zadej prosím obě čísla.</span>';
+    return;
+  }
+
+  const a = parseFloat(aStr);
+  const b = parseFloat(bStr);
+
+  let html = "";
+  html += "Součet: " + (a + b) + "<br>";
+  html += "Rozdíl: " + (a - b) + "<br>";
+  html += "Součin: " + (a * b) + "<br>";
+
+  if (b !== 0) {
+    html += "Podíl: " + (a / b);
+  } else {
+    html += '<span class="chyba">Dělení nulou není možné!</span>';
+  }
+
+  vysledky.innerHTML = html;
+}
+</script>
+
+</body>
+</html>
