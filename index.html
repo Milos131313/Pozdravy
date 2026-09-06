@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+
+<html lang="cs"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>Pozdrav</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        max-width: 600px;
+        margin: 60px auto;
+        padding: 20px;
+        text-align: center;
+    }
+
+    h1 {
+        margin-bottom: 40px;
+    }
+
+    input {
+        font-size: 18px;
+        padding: 10px;
+        margin: 10px;
+    }
+
+    button {
+        font-size: 18px;
+        padding: 12px 25px;
+        margin: 8px;
+        cursor: pointer;
+    }
+
+    #odpoved {
+        margin-top: 30px;
+        font-size: 20px;
+        min-height: 30px;
+    }
+</style>
+
+</head>
+
+<body>
+
+<h1>Ahoj!</h1>
+
+<div id="jmenoBox">
+    <p>Jak se jmenuješ?</p>
+
+    <input type="text" id="jmeno" placeholder="Tvoje jméno">
+
+    <br>
+
+    <button onclick="ulozJmeno()">Pokračovat</button>
+</div>
+
+
+<div id="stavBox" style="display:none;">
+    <p id="pozdrav"></p>
+
+    <p>Jak se ti vede?</p>
+
+    <button onclick="stav('dobře')">Dobře</button>
+    <button onclick="stav('špatně')">Špatně</button>
+</div>
+
+
+<div id="dotazBox" style="display:none;">
+    <p id="stavOdpoved"></p>
+
+    <p>Nechceš mi zavolat?</p>
+
+    <button onclick="telefon('ano')">Ano</button>
+    <button onclick="telefon('ne')">Ne</button>
+</div>
+
+
+<div id="konecBox" style="display:none;">
+    <p id="konec"></p>
+</div>
+
+
+<div id="odpoved"></div>
+
+
+<script>
+
+    let jmeno = "";
+
+
+    function ulozJmeno() {
+
+        jmeno = document.getElementById("jmeno").value.trim();
+
+        if (jmeno === "") {
+            document.getElementById("odpoved").textContent =
+                "Nejdřív mi prosím řekni své jméno.";
+            return;
+        }
+
+        document.getElementById("jmenoBox").style.display = "none";
+        document.getElementById("stavBox").style.display = "block";
+
+        document.getElementById("pozdrav").textContent =
+            "Těší mě, " + jmeno + "!";
+    }
+
+
+    function stav(odpoved) {
+
+        document.getElementById("stavBox").style.display = "none";
+        document.getElementById("dotazBox").style.display = "block";
+
+        if (odpoved === "dobře") {
+
+            document.getElementById("stavOdpoved").textContent =
+                "To jsem rád, " + jmeno + ".";
+
+        } else {
+
+            document.getElementById("stavOdpoved").textContent =
+                "To mě mrzí, " + jmeno + ".";
+
+        }
+    }
+
+
+    function telefon(odpoved) {
+
+        document.getElementById("dotazBox").style.display = "none";
+        document.getElementById("konecBox").style.display = "block";
+
+        if (odpoved === "ano") {
+
+            document.getElementById("konec").textContent =
+                "Super, budu se těšit!";
+
+        } else {
+
+            document.getElementById("konec").textContent =
+                "To je škoda.";
+
+        }
+
+        document.getElementById("odpoved").textContent =
+            "Hezký den, " + jmeno + "!";
+    }
+
+</script>
+
+</body> </html>
